@@ -16,9 +16,9 @@ app.get("/", function (req, res) {
   if (req.url === "/") {
     res.send(`
     <div style="display:flex; justify-content:center;padding:20px;"> 
-      <a href="/g-mentors" style="text-decoration:none;color:black;">All Mentors list</a>
+      <a href="/get-mentors" style="text-decoration:none;color:black;">All Mentors list</a>
     <br>
-    <a href="/g-students"  style="text-decoration:none;color:black;">All Students List</a>
+    <a href="/get-students"  style="text-decoration:none;color:black;">All Students List</a>
 
     </div>
     
