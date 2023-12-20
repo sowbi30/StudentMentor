@@ -13,11 +13,11 @@ app.use(
   })
 );
 app.get("/", function (req, res) {
-  if (req.url === "/") {
+  if (req.url == "/") {
     res.send(`
     <div style="display:flex; justify-content:center;padding:20px;"> 
       <a href="/get-mentors" style="text-decoration:none;color:black;">All Mentors list</a>
-    <br>
+    <br/>
     <a href="/get-students"  style="text-decoration:none;color:black;">All Students List</a>
 
     </div>
