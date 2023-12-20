@@ -12,7 +12,25 @@ app.use(
     origin: "*",
   })
 );
+app.get("/", function (req, res) {
+  if (req.url === "/") {
+    res.send(`
+    <div style="display:flex; justify-content:center;padding:20px;"> 
+      <a href="/mentors" style="text-decoration:none;color:black;">All Mentors list</a>
+    
+    <a href="/all-students"  style="text-decoration:none;color:black;">All Students List</a>
 
+    <a href="/students-without-mentors"  style="text-decoration:none;color:black;">Students Without Mentors</a>
+
+    </div>
+    
+    `);
+  } else {
+    res.status(404).end(`
+    <p>Error</p> 
+    `);
+  }
+});
 
 // API to Create Mentor
 app.post('/mentors', async (req, res) => {
