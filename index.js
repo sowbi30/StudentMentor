@@ -6,17 +6,12 @@ const dotenv = require('dotenv').config();
 const port = 3001;
 const URL = process.env.DB;
 
-
-
-
 app.use(express.json())
 app.use(
   cors({
     origin: "*",
   })
 );
-
-
 
 
 // API to Create Mentor
@@ -34,6 +29,18 @@ app.post('/mentors', async (req, res) => {
         console.log(error);
         res.status(500).json({ message: 'Something went wrong' });
     }
+});
+app.get("/mentors", async (req, res) => {
+  try {
+    const connection = await MongoClient.connect(URL);
+    const db = connection.db("Bootcamp");
+    const mentorsData = await db.collection("mentors").find({}).toArray();
+    connection.close();
+    res.send(mentorsData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "Something went wrong" });
+  }
 });
 
 // API to Create Student
@@ -56,6 +63,27 @@ app.post('/students', async (req, res) => {
       res.status(500).json({ message: 'Something went wrong' });
   }
 });
+
+app.get("/students", async (req, res) => {
+  try {
+    const connection = await MongoClient.connect(URL);
+    const db = connection.db("Bootcamp");
+    const studentsData = await db.collection("students").find({}).toArray();
+    const students = studentsData.map((item) => ({
+      studentId: item._id.toString(),
+      studentName: item.studentName,
+      studentMail: item.studentMail,
+      oldMentor: item.oldMentor,
+      currentMentor: item.currentMentor
+    }));
+    connection.close();
+    res.send(students);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "something went wrong" });
+  }
+});
+
 // 3. Write API to Assign a student to Mentor
 app.post("/studentToMentor", async (req, res) => {
   try {
@@ -156,26 +184,6 @@ app.post("/change-mentor", async (req, res) => {
   }
 });
 
-// get all students
-app.get("/all-students", async (req, res) => {
-  try {
-    const connection = await MongoClient.connect(URL);
-    const db = connection.db("Bootcamp");
-    const studentsData = await db.collection("students").find({}).toArray();
-    const students = studentsData.map((item) => ({
-      studentId: item._id.toString(),
-      studentName: item.studentName,
-      studentMail: item.studentMail,
-      oldMentor: item.oldMentor,
-      currentMentor: item.currentMentor
-    }));
-    connection.close();
-    res.send(students);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: "something went wrong" });
-  }
-});
 
 
 // 5. Write API to show all students for a particular mentor
