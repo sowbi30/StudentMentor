@@ -18,33 +18,6 @@ app.use(
 
 
 
-app.get("/", function (req, res) {
-  if (req.url === "/") {
-    res.send(`
-    <h2 style="text-align:center>Bootcamp</h2>
-    <div style="display:flex; justify-content:center;padding:20px;"> 
-    <div style=" background-color:blue; padding:20px;"> 
-    <p style="color:white;background-color:white; padding:10px 40px; margin:10px 20px; text-align:center ">
-      <a href="/mentors">All Mentors list</a>
-    </p>
-
-    <p style= "text-align:center ">
-    <a href="/all-students">All Students List</a></p>
-
-    <p style="text-align:center ">
-    <a href="/students-without-mentors">Students Without Mentors</a></p>
-
-    </div>
-    </div>
-    `);
-  } else {
-    res.status(404).end(`
-    
-    <p>Loading...</p> 
-    <p> Something Went Wrong</p>
-    `);
-  }
-});
 
 // API to Create Mentor
 app.post('/mentors', async (req, res) => {
