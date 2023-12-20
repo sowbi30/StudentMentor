@@ -17,7 +17,7 @@ app.get("/", function (req, res) {
     res.send(`
     <div style="display:flex; justify-content:center;padding:20px;"> 
       <a href="/g-mentors" style="text-decoration:none;color:black;">All Mentors list</a>
-    
+    <br>
     <a href="/g-students"  style="text-decoration:none;color:black;">All Students List</a>
 
     </div>
@@ -46,7 +46,10 @@ app.post('/mentors', async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 });
-app.get("/g-mentors", async (req, res) => {
+
+
+//get all mentors
+app.get("/get-mentors", async (req, res) => {
   try {
     const connection = await MongoClient.connect(URL);
     const db = connection.db("Bootcamp");
@@ -58,6 +61,7 @@ app.get("/g-mentors", async (req, res) => {
     res.status(500).send({ error: "Something went wrong" });
   }
 });
+
 
 // API to Create Student
 app.post('/students', async (req, res) => {
@@ -80,7 +84,8 @@ app.post('/students', async (req, res) => {
   }
 });
 
-app.get("/g-students", async (req, res) => {
+// get all students
+app.get("/get-students", async (req, res) => {
   try {
     const connection = await MongoClient.connect(URL);
     const db = connection.db("Bootcamp");
@@ -96,7 +101,7 @@ app.get("/g-students", async (req, res) => {
     res.send(students);
   } catch (error) {
     console.log(error);
-    res.status(500).send({ error: "something went wrong" });
+    res.status(500).send({ error: "Something went Wrong" });
   }
 });
 
