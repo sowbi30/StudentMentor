@@ -118,12 +118,10 @@ app.post("/studentToMentor", async (req, res) => {
       res.status(404).send({ error: "Mentor or student not found" });
       return;
     }
-    // UPDATE PARTICULAR STUDENT
     await studentsCollection.updateOne(
       { _id: studentObjectId },
       { $set: { oldMentor: student.currentMentor, currentMentor: mentor.mentorName } }
     );
-    //ASSIGN MENTOR
     await mentorsCollection.updateOne(
       { _id: mentorObjectId },
       { $push: { students: { studentName: student.studentName, studentMail: student.studentMail, studentId: studentObjectId } } }
